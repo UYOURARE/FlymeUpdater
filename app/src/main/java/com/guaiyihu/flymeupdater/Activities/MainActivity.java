@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 dialog.setNegativeButton("设置", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent =  new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
+                        Intent intent = new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
                         startActivity(intent);
                     }
                 });
