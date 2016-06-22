@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     private String currentVersion;//获取当前flyme版本
     private Button check;
+    private Button about_us;
     private TextView newMessage;
     private TextView version;
     private File otaZip = null;
@@ -95,6 +96,16 @@ public class MainActivity extends AppCompatActivity implements MainView{
             }
         });
 
+        about_us.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(MainActivity.this,AboutUs.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 
     private void initView() {
@@ -102,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         updateTools = new UpdateTools();
         currentVersion = updateTools.getCurrentVersion();
         check = (Button)findViewById(R.id.check);
+        about_us = (Button)findViewById(R.id.about_us);
         version = (TextView)findViewById(R.id.version);
         newMessage = (TextView)findViewById(R.id.message);
         receiver = new DownloadReceiver();

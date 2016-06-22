@@ -18,7 +18,6 @@ public class CustomApplication extends Application{
         super.onCreate();
     }
 
-
     public String getNewVersion(){
         return newVersion;
     }
