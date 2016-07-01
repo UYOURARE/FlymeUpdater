@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.AboutUs"
+        <activity android:name=".Activities.AboutMe"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="关于作者">

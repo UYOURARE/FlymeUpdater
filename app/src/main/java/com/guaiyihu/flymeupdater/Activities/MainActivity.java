@@ -13,9 +13,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.os.RecoverySystem;
 import android.widget.Toast;
@@ -40,6 +45,8 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements MainView{
 
+
+    private PopupWindow popupwindow;
     private String currentVersion;//获取当前flyme版本
     private Button check;
     private Button about_us;
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     private UpdateTools updateTools;
     private MainPresenter mMainPresenter;
     private CustomApplication app;
+    private String[] settings = {"重启到recovery", "下载最新完整包", "高级设置", "关于作者"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         initView();//实例化各种类
         EventBus.getDefault().register(this);
         registerReceiver(networkChangeReceiver,intentFilter);
+
 
         version.setText("当前版本 " + currentVersion);
 
@@ -100,9 +109,71 @@ public class MainActivity extends AppCompatActivity implements MainView{
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(MainActivity.this,AboutUs.class);
-                startActivity(i);
 
+                if (popupwindow != null&&popupwindow.isShowing()) {
+                    popupwindow.dismiss();
+                    return;
+                } else {
+                    initPopupWindowView();
+                    popupwindow.showAsDropDown(v, 0, 5);
+                }
+
+
+
+            }
+        });
+
+    }
+
+    public void initPopupWindowView() {
+
+        View customView = getLayoutInflater().inflate(R.layout.popview_item,
+                null);
+        popupwindow = new PopupWindow(customView, 1080, 1920);
+        ListView listView = (ListView) customView.findViewById(R.id.settings_list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+
+                    case 0:
+
+                        break;
+
+                    case 1:
+
+                        break;
+
+                    case 2:
+
+                        break;
+
+                    case 3:
+                        Intent i = new Intent(MainActivity.this,AboutMe.class);
+                        startActivity(i);
+                        break;
+
+                    default:
+
+                        break;
+                }
+                popupwindow.dismiss();
+            }
+        });
+
+        customView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (popupwindow != null && popupwindow.isShowing()) {
+                    popupwindow.dismiss();
+                    popupwindow = null;
+                }
+
+                return false;
             }
         });
 
@@ -164,38 +235,46 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShowOTAEvent(OTAEvent otaEvent) {
         switch (otaEvent.getOTAMode()){
+
             case 1:
                 check.setText("立即下载");
                 newVersionMessage.setText("检测到新版本: " + app.getNewVersion() + "\n" + app.getOTAMessage());
                 newMessage.setText("");
                 mode = 1;
                 break;
+
             case 2:
                 check.setText("正在下载");
                 mode = 2;
                 break;
+
             case 3:
                 check.setText("立即安装");
                 mode = 3;
                 break;
+
             case 4:
                 check.setText("正在检查更新...");
                 mode = 4;
                 break;
+
             case 5:
                 check.setText("检查更新");
                 newMessage.setText("当前无可用更新");
                 mode = 0;
                 break;
+
             case 6:
                 check.setText("检查更新");
                 newMessage.setText("无法检查更新");
                 break;
+
             case 7:
                 check.setText("检查更新");
                 newMessage.setText("当前版本过老,请下载完整包或者历史ota升级包");
                 mode = 0;
                 break;
+            
         }
     }
 
