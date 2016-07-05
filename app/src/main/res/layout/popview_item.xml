@@ -6,8 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin">
 
     <ListView
-        android:background="#FFFFFF"
         android:id="@+id/settings_list"
+        android:background="@drawable/corner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ></ListView>

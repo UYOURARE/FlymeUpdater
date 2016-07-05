@@ -7,12 +7,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.os.RecoverySystem;
 import android.widget.Toast;
 
+import com.fivehundredpx.android.blur.BlurringView;
 import com.guaiyihu.flymeupdater.Application.CustomApplication;
 import com.guaiyihu.flymeupdater.Events.OTAEvent;
 import com.guaiyihu.flymeupdater.R;
@@ -65,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
     private UpdateTools updateTools;
     private MainPresenter mMainPresenter;
     private CustomApplication app;
-    private String[] settings = {"重启到recovery", "下载最新完整包", "当前版本更新日志", "高级设置", "关于作者"};
+    private String[] settings = {"重启到recovery", "下载最新完整包", "Bug反馈", "高级设置", "关于作者"};
+    private BlurringView blurringView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,27 +136,37 @@ public class MainActivity extends AppCompatActivity implements MainView{
         ListView listView = (ListView) customView.findViewById(R.id.settings_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
 
                     case 0:
-
+                        try {
+                            Runtime.getRuntime().exec("su -c reboot recovery");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         break;
 
                     case 1:
-
+                        Intent fullROM = new Intent(Intent.ACTION_VIEW, Uri.parse("https://yunpan.cn/cSmhs8xNbyCLA"));
+                        startActivity(fullROM);
                         break;
 
                     case 2:
-
+                        Intent currentROM = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.miui.com/thread-4270036-1-1.html"));
+                        startActivity(currentROM);
                         break;
 
                     case 3:
-                        Intent i = new Intent(MainActivity.this,AboutMe.class);
-                        startActivity(i);
+                        Intent Mi3Settings = getPackageManager().getLaunchIntentForPackage("com.github.mi3tdsettings");
+                        startActivity(Mi3Settings);
+                        break;
+
+                    case 4:
+                        Intent about_me = new Intent(MainActivity.this,AboutMe.class);
+                        startActivity(about_me);
                         break;
 
                     default:
@@ -295,6 +307,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
             updateTools.sendUpdateMessage(7);
         }
     }
+
+
 
     //监测下载是否完成
     class DownloadReceiver extends BroadcastReceiver {
