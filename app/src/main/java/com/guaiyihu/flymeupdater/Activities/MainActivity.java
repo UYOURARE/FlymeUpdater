@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.os.RecoverySystem;
 import android.widget.Toast;
 
-import com.fivehundredpx.android.blur.BlurringView;
 import com.guaiyihu.flymeupdater.Application.CustomApplication;
 import com.guaiyihu.flymeupdater.Events.OTAEvent;
 import com.guaiyihu.flymeupdater.R;
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
     private MainPresenter mMainPresenter;
     private CustomApplication app;
     private String[] settings = {"重启到recovery", "下载最新完整包", "Bug反馈", "高级设置", "关于作者"};
-    private BlurringView blurringView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
