@@ -46,7 +46,6 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements MainView{
 
-
     private PopupWindow popupwindow;
     private String currentVersion;//获取当前flyme版本
     private Button check;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     private UpdateTools updateTools;
     private MainPresenter mMainPresenter;
     private CustomApplication app;
-    private String[] settings = {"重启到recovery", "下载最新完整包", "Bug反馈", "高级设置", "关于作者"};
+    private String[] settings = {"重启到recovery", "下载最新完整包与最新OTA更新包", "ROM说明以及Bug反馈", "高级设置", "关于作者"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
             @Override
             public void onClick(View v) {
 
-
                 if (popupwindow != null&&popupwindow.isShowing()) {
                     popupwindow.dismiss();
                     return;
@@ -118,8 +116,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
                     initPopupWindowView();
                     popupwindow.showAsDropDown(v, 0, 5);
                 }
-
-
 
             }
         });
@@ -140,11 +136,28 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 switch (position) {
 
                     case 0:
-                        try {
-                            Runtime.getRuntime().exec("su -c reboot recovery");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(MainActivity.this);
+                        dialog.setTitle("重新到Recovery");
+                        dialog.setMessage("确定以立即重启到恢复模式");
+                        dialog.setCancelable(true);
+                        dialog.setPositiveButton("立即重启", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which){
+                                try {
+                                    Runtime.getRuntime().exec("su -c reboot recovery");
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        dialog.setNegativeButton("稍后重启", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which){
+
+                            }
+                        });
+                        dialog.show();
+
                         break;
 
                     case 1:
@@ -305,8 +318,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
             updateTools.sendUpdateMessage(7);
         }
     }
-
-
 
     //监测下载是否完成
     class DownloadReceiver extends BroadcastReceiver {

@@ -26,7 +26,7 @@
 
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ROM作者:乖奕虎"
+        android:text="ROM作者 : 乖奕虎"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:textSize="18dp"
@@ -65,7 +65,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text=" 欢迎加入米3TDFlyme5内测体验群\n\n 群号 : 568969731"/>
+                    android:text=" 欢迎加入米3TDFlyme5内测体验群\n\n 群号 : 568969731 , 点我加群~"/>
 
             </LinearLayout>
 
@@ -100,7 +100,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text=" 欢迎关注本萌新浪微博\n\n ID : @乖奕虎"/>
+                    android:text=" 欢迎关注本萌新浪微博\n\n ID : @乖奕虎 , 点我查看~"/>
 
             </LinearLayout>
 
@@ -134,7 +134,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text=" 如果你想请作者喝听可乐的话\n\n 欢迎捐赠 ! 谢谢支持 !"/>
+                    android:text=" 如果你想请作者喝听可乐的话\n\n 欢迎捐赠 ! 谢谢支持 ! 点我捐赠~"/>
 
 
             </LinearLayout>

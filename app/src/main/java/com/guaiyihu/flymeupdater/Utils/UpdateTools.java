@@ -13,7 +13,7 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class UpdateTools {
 
-    public void download(String ri, String newVersion, DownloadManager downloadManager) {
+    public long download(String ri, String newVersion, DownloadManager downloadManager) {
 
         Uri uri = Uri.parse(ri);
         DownloadManager.Request request = new DownloadManager.Request(uri);
@@ -21,7 +21,8 @@ public class UpdateTools {
         request.setDescription(newVersion + "下载");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setVisibleInDownloadsUi(true);
-        downloadManager.enqueue(request);
+        long downloadID = downloadManager.enqueue(request);
+        return downloadID;
     }
 
     public void sendUpdateMessage(int i){
